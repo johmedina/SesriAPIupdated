@@ -6,7 +6,10 @@ namespace SesriCatiApi.Models
 {
     public partial class sesriDBContext : DbContext
     {
-        
+        public sesriDBContext()
+        {
+        }
+
         public sesriDBContext(DbContextOptions<sesriDBContext> options)
             : base(options)
         {
@@ -36,6 +39,8 @@ namespace SesriCatiApi.Models
         public virtual DbSet<DailyReportDoctors> DailyReportDoctors { get; set; }
         public virtual DbSet<DailyReportDoctors1> DailyReportDoctors1 { get; set; }
         public virtual DbSet<DailyReportView> DailyReportView { get; set; }
+        public virtual DbSet<DeviceHistory> DeviceHistory { get; set; }
+        public virtual DbSet<DeviceHistoryView> DeviceHistoryView { get; set; }
         public virtual DbSet<DialHistory> DialHistory { get; set; }
         public virtual DbSet<DialHistory1> DialHistory1 { get; set; }
         public virtual DbSet<DialHistoryView> DialHistoryView { get; set; }
@@ -43,6 +48,10 @@ namespace SesriCatiApi.Models
         public virtual DbSet<DimActivity1> DimActivity1 { get; set; }
         public virtual DbSet<DimActivityView> DimActivityView { get; set; }
         public virtual DbSet<DimActivityView1> DimActivityView1 { get; set; }
+        public virtual DbSet<DimDevice> DimDevice { get; set; }
+        public virtual DbSet<DimDeviceManufacturer> DimDeviceManufacturer { get; set; }
+        public virtual DbSet<DimDeviceModel> DimDeviceModel { get; set; }
+        public virtual DbSet<DimDeviceStatus> DimDeviceStatus { get; set; }
         public virtual DbSet<DimDialStatus> DimDialStatus { get; set; }
         public virtual DbSet<DimDialStatus1> DimDialStatus1 { get; set; }
         public virtual DbSet<DimEvaluationCriteria> DimEvaluationCriteria { get; set; }
@@ -127,6 +136,14 @@ namespace SesriCatiApi.Models
         public virtual DbSet<WorkRequest1> WorkRequest1 { get; set; }
         public virtual DbSet<WorkRequestView> WorkRequestView { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=DESKTOP-G23HHLH;Database=sesriDB;Trusted_Connection=True;");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -866,6 +883,88 @@ namespace SesriCatiApi.Models
                 entity.Property(e => e.SupervisedBy).HasMaxLength(20);
             });
 
+            modelBuilder.Entity<DeviceHistory>(entity =>
+            {
+                entity.ToTable("DeviceHistory", "History");
+
+                entity.Property(e => e.AssignedTo).HasMaxLength(50);
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(50);
+
+                entity.Property(e => e.DeviceName).HasMaxLength(50);
+
+                entity.Property(e => e.DueDate).HasColumnType("date");
+
+                entity.Property(e => e.Location).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(50);
+
+                entity.Property(e => e.Qutag)
+                    .HasColumnName("QUTag")
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
+                entity.Property(e => e.Status).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<DeviceHistoryView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("DeviceHistoryView", "History");
+
+                entity.Property(e => e.ArAssignedTo).HasMaxLength(150);
+
+                entity.Property(e => e.ArCreatedByName).HasMaxLength(150);
+
+                entity.Property(e => e.AssignedTo).HasMaxLength(50);
+
+                entity.Property(e => e.Cpu)
+                    .HasColumnName("CPU")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(50);
+
+                entity.Property(e => e.DeviceName).HasMaxLength(50);
+
+                entity.Property(e => e.DueDate).HasColumnType("date");
+
+                entity.Property(e => e.EngAssignedTo).HasMaxLength(150);
+
+                entity.Property(e => e.EngCreatedByName).HasMaxLength(150);
+
+                entity.Property(e => e.Location).HasMaxLength(50);
+
+                entity.Property(e => e.Manufacturer).HasMaxLength(50);
+
+                entity.Property(e => e.ManufacturerName).HasMaxLength(50);
+
+                entity.Property(e => e.Model).HasMaxLength(50);
+
+                entity.Property(e => e.ModelName).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(50);
+
+                entity.Property(e => e.OperatingSystem).HasMaxLength(50);
+
+                entity.Property(e => e.Qutag)
+                    .HasColumnName("QUTag")
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
+                entity.Property(e => e.Ram).HasColumnName("RAM");
+
+                entity.Property(e => e.Rownr).HasColumnName("ROWNR");
+
+                entity.Property(e => e.SerialNumber)
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
+                entity.Property(e => e.Status).HasMaxLength(50);
+
+                entity.Property(e => e.StatusLabel).HasMaxLength(50);
+            });
+
             modelBuilder.Entity<DialHistory>(entity =>
             {
                 entity.HasNoKey();
@@ -1033,6 +1132,62 @@ namespace SesriCatiApi.Models
                     .HasMaxLength(150);
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            });
+
+            modelBuilder.Entity<DimDevice>(entity =>
+            {
+                entity.Property(e => e.Cpu)
+                    .IsRequired()
+                    .HasColumnName("CPU")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.DeviceName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Manufacturer)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Model)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.OperatingSystem)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Qutag)
+                    .IsRequired()
+                    .HasColumnName("QUTag")
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
+                entity.Property(e => e.Ram).HasColumnName("RAM");
+
+                entity.Property(e => e.SerialNumber)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+            });
+
+            modelBuilder.Entity<DimDeviceManufacturer>(entity =>
+            {
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<DimDeviceModel>(entity =>
+            {
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<DimDeviceStatus>(entity =>
+            {
+                entity.Property(e => e.Name).HasMaxLength(50);
             });
 
             modelBuilder.Entity<DimDialStatus>(entity =>
@@ -1992,8 +2147,7 @@ namespace SesriCatiApi.Models
 
             modelBuilder.Entity<IssueView>(entity =>
             {
-                entity.HasKey(e => new { e.UniqueId, e.Id });
-                //entity.HasNoKey();
+                entity.HasNoKey();
 
                 entity.ToView("IssueView");
 
@@ -2018,6 +2172,8 @@ namespace SesriCatiApi.Models
                 entity.Property(e => e.EnglishStatus).HasMaxLength(250);
 
                 entity.Property(e => e.PhoneNumber).HasMaxLength(8);
+
+                entity.Property(e => e.Rownr).HasColumnName("ROWNR");
 
                 entity.Property(e => e.TypeArabic).HasMaxLength(100);
 
