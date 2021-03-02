@@ -1,0 +1,32 @@
+﻿<Properties StartupConfiguration="{50C01710-11EF-4D8B-8D57-B90490E3DD3A}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SesriCatiApi/Controllers/DeviceHistoriesViewController.cs">
+    <Files>
+      <File FileName="SesriCatiApi/Models/sesriDBContext.cs" Line="135" Column="1" />
+      <File FileName="SesriCatiApi/Startup.cs" Line="1" Column="1" />
+      <File FileName="SesriCatiApi/appsettings.json" Line="14" Column="2" />
+      <File FileName="SesriCatiApi/Controllers/DimDeviceModelsController.cs" Line="1" Column="1" />
+      <File FileName="SesriCatiApi/Controllers/DeviceHistoriesViewController.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="SesriCatiApi" expanded="True">
+            <Node name="SesriCatiApi" expanded="True">
+              <Node name="Controllers" expanded="True">
+                <Node name="DeviceHistoriesViewController.cs" selected="True" />
+              </Node>
+              <Node name="Models" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.SesriCatiApi PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

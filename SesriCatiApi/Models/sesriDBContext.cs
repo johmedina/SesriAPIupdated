@@ -6,9 +6,6 @@ namespace SesriCatiApi.Models
 {
     public partial class sesriDBContext : DbContext
     {
-        public sesriDBContext()
-        {
-        }
 
         public sesriDBContext(DbContextOptions<sesriDBContext> options)
             : base(options)
@@ -136,14 +133,6 @@ namespace SesriCatiApi.Models
         public virtual DbSet<WorkRequest1> WorkRequest1 { get; set; }
         public virtual DbSet<WorkRequestView> WorkRequestView { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=DESKTOP-G23HHLH;Database=sesriDB;Trusted_Connection=True;");
-            }
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -909,7 +898,8 @@ namespace SesriCatiApi.Models
 
             modelBuilder.Entity<DeviceHistoryView>(entity =>
             {
-                entity.HasNoKey();
+                //entity.HasNoKey();
+                entity.HasKey(e => e.Id);
 
                 entity.ToView("DeviceHistoryView", "History");
 
